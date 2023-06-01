@@ -4,13 +4,16 @@ import { useForm } from "react-hook-form";
 
 const App = () => {
   const {
-    register,
+    register, //регистрация инпута для хука
     reset,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
   });
+
+  console.log(watch("firstName"));
 
   const onSubmit = (data) => {
     console.log(data);
@@ -24,9 +27,12 @@ const App = () => {
           <label>
             FirstName:
             <input
+              placeholder="text"
               {...register("firstName", {
-                required: "Поле обязательно к заполнению",
+                // регистрация инпута и присвоение этому инпуту имени
+                required: "Поле обязательно к заполнению", // нужна ли проверка, можно вместо булева значения использовать текст как в этом случае
                 minLength: {
+                  // дополнительная проверка
                   value: 5,
                   message: "Длина должна составлять более 5 символов",
                 },
@@ -36,7 +42,7 @@ const App = () => {
           <input type="submit" />
         </div>
         <div>
-          {errors?.firstName && <p>{errors?.firstName.message || "Error"}</p>}
+          {errors?.firstName && <p>{errors?.firstName.message || "Error"}</p>};
         </div>
         {/* <div>
           {errors?.firstName && <p>{errors?.firstName?.message || "Error!"}</p>}
